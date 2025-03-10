@@ -18,6 +18,11 @@ export const Categories: CollectionConfig = {
       required: true,
     },
     {
+      name: 'media',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'parent',
       type: 'relationship',
       relationTo: 'categories',

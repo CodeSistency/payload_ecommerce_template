@@ -271,6 +271,7 @@ export interface Product {
 export interface Category {
   id: string;
   name: string;
+  media?: (string | null) | Media;
   parent?: (string | null) | Category;
   updatedAt: string;
   createdAt: string;
@@ -480,6 +481,7 @@ export interface ProductsSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
+  media?: T;
   parent?: T;
   updatedAt?: T;
   createdAt?: T;
