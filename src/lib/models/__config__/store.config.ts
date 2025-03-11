@@ -1,13 +1,11 @@
 import { EntityModelType } from "..";
 
 export const initialValues: EntityModelType = {
-	// Posts
-	Posts: [],
+
+	Categories: [],
+	Media: [],
+	Orders: [],
+	Products: [],
 	Users: [],
-	Activities: [],
-	Courses: [],
 
-
-
-	
 };

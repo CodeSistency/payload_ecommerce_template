@@ -1,28 +1,46 @@
 import { Carousel } from "@/components/Generic/Carousel/Carousel.comp";
 import { Navbar } from "@/components/Generic/Navbar/Navbar.comp";
 import { ProductCard } from "@/components/Generic/ProductCard/ProductCard.comp";
+import { useModelDataStore } from "@/lib/models";
 import { useQueryWithFetchHook } from "@/lib/utils/hooks/useQueryWithFetch";
 import { Product } from "@/payload-types";
+import { useEffect } from "react";
+import { ProductsModel } from "@/lib/models/Products";
 
 export const HomepageScreen: React.FC = () => {
-  // Use your custom hook to fetch products
-  const {
-    data: productsResponse,
-    isLoading,
-    isError,
-  } = useQueryWithFetchHook<Product[]>({
-    key: 'products', // Unique key for this query
-    url: '/api/products', // Adjust the URL as necessary
+
+  const Products = useQueryWithFetchHook<Product[]>({
+    key: ProductsModel.key,
+    url: ProductsModel.endpoint.get.url,
   });
 
+const {
+  actions: { setModelData },
+} = useModelDataStore();
+
+
+useEffect(() => {
+  if (Products.isSuccess 
+  ) {
+    setModelData(
+      ProductsModel.key,
+      Products.data ?? []);
+      
+  }
+}, [
+  ProductsModel.key,
+  Products.data,
+]);
+  // Use your custom hook to fetch products
+
   // Extract the products data from the response
-  const products = productsResponse ?? [];
+  const products = Products.data ?? [];
 
   // Use the first product as a featured item in the carousel (optional)
   const featuredProduct = products[0];
 
   // Shimmer loading effect for products
-  if (isLoading) {
+  if (Products.isLoading) {
     return (
       <div>
         <Navbar />
@@ -43,7 +61,7 @@ export const HomepageScreen: React.FC = () => {
   }
 
   // Error state
-  if (isError) {
+  if (Products.isError) {
     return (
       <div>
         <Navbar />
@@ -56,7 +74,7 @@ export const HomepageScreen: React.FC = () => {
   }
 
   // Empty state
-  if (products.length === 0) {
+  if (Products.data?.length === 0) {
     return (
       <div>
         <Navbar />
