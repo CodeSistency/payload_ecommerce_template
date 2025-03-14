@@ -1,3 +1,4 @@
+"use client";
 import { Carousel } from "@/components/Generic/Carousel/Carousel.comp";
 import { Navbar } from "@/components/Generic/Navbar/Navbar.comp";
 import { ProductCard } from "@/components/Generic/ProductCard/ProductCard.comp";
@@ -8,41 +9,26 @@ import { useEffect } from "react";
 import { ProductsModel } from "@/lib/models/Products";
 
 export const HomepageScreen: React.FC = () => {
-
   const Products = useQueryWithFetchHook<Product[]>({
     key: ProductsModel.key,
     url: ProductsModel.endpoint.get.url,
   });
 
-const {
-  actions: { setModelData },
-} = useModelDataStore();
+  const { actions: { setModelData } } = useModelDataStore();
 
+  useEffect(() => {
+    if (Products.isSuccess) {
+      setModelData(ProductsModel.key, Products.data ?? []);
+    }
+  }, [Products.isSuccess, Products.data]);
 
-useEffect(() => {
-  if (Products.isSuccess 
-  ) {
-    setModelData(
-      ProductsModel.key,
-      Products.data ?? []);
-      
-  }
-}, [
-  ProductsModel.key,
-  Products.data,
-]);
-  // Use your custom hook to fetch products
-
-  // Extract the products data from the response
-  const products = Products.data ?? [];
-
-  // Use the first product as a featured item in the carousel (optional)
+  // Ensure products is always an array
+  const products = Array.isArray(Products.data) ? Products.data : [];
   const featuredProduct = products[0];
 
-  // Shimmer loading effect for products
   if (Products.isLoading) {
     return (
-      <div>
+      <div className="w-full">
         <Navbar />
         <div className="container mx-auto py-8">
           <h2 className="text-2xl font-bold mb-4 text-primary dark:text-primaryDark">Featured Products</h2>
@@ -60,21 +46,21 @@ useEffect(() => {
     );
   }
 
-  // Error state
   if (Products.isError) {
     return (
       <div>
         <Navbar />
         <div className="container mx-auto py-8 text-center">
           <h2 className="text-2xl font-bold mb-4 text-primary dark:text-primaryDark">Error</h2>
-          <p className="text-red-500">Failed to fetch products. Please try again later.</p>
+          <p className="text-red-500">
+            Failed to fetch products: {Products.error?.message || "Please try again later."}
+          </p>
         </div>
       </div>
     );
   }
 
-  // Empty state
-  if (Products.data?.length === 0) {
+  if (products.length === 0) {
     return (
       <div>
         <Navbar />
@@ -86,7 +72,6 @@ useEffect(() => {
     );
   }
 
-  // Default state (products loaded successfully)
   return (
     <div>
       <Navbar />

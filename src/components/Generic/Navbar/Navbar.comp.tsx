@@ -9,8 +9,8 @@ export const Navbar: React.FC = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
-    <nav className="bg-primary dark:bg-primaryDark text-white p-4">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className="bg-primary dark:bg-primaryDark text-white p-4 w-full">
+      <div className="container mx-auto flex flex-row justify-between items-center w-full">
         <Link href="/" className="text-xl font-bold">Store</Link>
         <div className="space-x-4">
           <Link href="/products">Products</Link>

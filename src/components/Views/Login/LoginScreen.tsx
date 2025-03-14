@@ -1,4 +1,4 @@
-// pages/login.tsx
+"use client";
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -40,7 +40,7 @@ const LoginScreen = () => {
       }
 
       // On successful login, redirect to the orders page or homepage
-      router.push('/orders');
+      // router.push('/orders');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
