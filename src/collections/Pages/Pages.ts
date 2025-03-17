@@ -1,10 +1,10 @@
-import { AboutUsBlock } from "@/app/blocks/AboutUsBlock/AboutUsBlock";
-import { CarouselBlock } from "@/app/blocks/CarouselBlock/CarouselBlock";
-import { CheckoutBlock } from "@/app/blocks/CheckoutBlock/CheckoutBlock";
-import { HeroBlock } from "@/app/blocks/HeroBlock/HeroBlock";
-import { InfoBlock } from "@/app/blocks/InfoBlock/InfoBlock";
-import { ListProductsBlock } from "@/app/blocks/ListProductsBlock/ListProductsBlock";
-import { OrdersBlock } from "@/app/blocks/OrdersBlock/OrdersBlock";
+import { AboutUsBlock } from "@/blocks/AboutUsBlock/AboutUsBlock";
+import { CarouselBlock } from "@/blocks/CarouselBlock/CarouselBlock";
+import { CheckoutBlock } from "@/blocks/CheckoutBlock/CheckoutBlock";
+import { HeroBlock } from "@/blocks/HeroBlock/HeroBlock";
+import { InfoBlock } from "@/blocks/InfoBlock/InfoBlock";
+import { ListProductsBlock } from "@/blocks/ListProductsBlock/ListProductsBlock";
+import { OrdersBlock } from "@/blocks/OrdersBlock/OrdersBlock";
 import { CollectionConfig } from "payload";
 
 export const Pages: CollectionConfig = {

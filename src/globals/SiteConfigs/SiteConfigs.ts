@@ -1,4 +1,4 @@
-import { createColorField } from "@/app/fields/colorPicker/CreateColorPicker";
+import { createColorField } from "@/fields/colorPicker/CreateColorPicker";
 import { GlobalConfig } from "payload";
 
 export const SiteSettings: GlobalConfig = {

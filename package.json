@@ -27,6 +27,7 @@
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
     "i18next": "^24.2.2",
+    "lucide-react": "^0.482.0",
     "next": "15.2.0",
     "payload": "latest",
     "payload-cloudinary": "^1.6.1",
