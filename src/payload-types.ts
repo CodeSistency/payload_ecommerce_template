@@ -71,6 +71,7 @@ export interface Config {
     orders: Order;
     products: Product;
     categories: Category;
+    pages: Page;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -82,6 +83,7 @@ export interface Config {
     orders: OrdersSelect<false> | OrdersSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -89,8 +91,18 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    promotions: Promotion;
+    'site-settings': SiteSetting;
+    header: Header;
+    footer: Footer;
+  };
+  globalsSelect: {
+    promotions: PromotionsSelect<false> | PromotionsSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -278,6 +290,162 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  title: string;
+  slug: string;
+  layout: (
+    | {
+        variant: 'fullWidth' | 'split' | 'compact';
+        impactLevel?: ('low' | 'normal' | 'high') | null;
+        headline: string;
+        subheadline?: string | null;
+        backgroundImage?: (string | null) | Media;
+        subBlocks?:
+          | {
+              variant: 'simple' | 'highlighted' | 'boxed';
+              impactLevel?: ('low' | 'normal' | 'high') | null;
+              text: string;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'info';
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'hero';
+      }
+    | {
+        variant: 'grid' | 'list' | 'carousel';
+        impactLevel?: ('low' | 'normal' | 'high') | null;
+        products?: (string | Product)[] | null;
+        subBlocks?:
+          | {
+              variant: 'simple' | 'highlighted' | 'boxed';
+              impactLevel?: ('low' | 'normal' | 'high') | null;
+              text: string;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'info';
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'listProducts';
+      }
+    | {
+        variant: 'textOnly' | 'withImage' | 'timeline';
+        impactLevel?: ('low' | 'normal' | 'high') | null;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        subBlocks?:
+          | {
+              variant: 'simple' | 'highlighted' | 'boxed';
+              impactLevel?: ('low' | 'normal' | 'high') | null;
+              text: string;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'info';
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'aboutUs';
+      }
+    | {
+        variant: 'imageOnly' | 'withText' | 'fullScreen';
+        impactLevel?: ('low' | 'normal' | 'high') | null;
+        items?:
+          | {
+              image?: (string | null) | Media;
+              caption?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        subBlocks?:
+          | {
+              variant: 'simple' | 'highlighted' | 'boxed';
+              impactLevel?: ('low' | 'normal' | 'high') | null;
+              text: string;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'info';
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'carousel';
+      }
+    | {
+        variant: 'simple' | 'highlighted' | 'boxed';
+        impactLevel?: ('low' | 'normal' | 'high') | null;
+        text: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'info';
+      }
+    | {
+        variant: 'list' | 'table' | 'summary';
+        impactLevel?: ('low' | 'normal' | 'high') | null;
+        orders?: (string | Order)[] | null;
+        subBlocks?:
+          | {
+              variant: 'simple' | 'highlighted' | 'boxed';
+              impactLevel?: ('low' | 'normal' | 'high') | null;
+              text: string;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'info';
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'orders';
+      }
+    | {
+        variant: 'simple' | 'detailed' | 'stepped';
+        impactLevel?: ('low' | 'normal' | 'high') | null;
+        items: {
+          name: string;
+          price: number;
+          quantity: number;
+          id?: string | null;
+        }[];
+        subBlocks?:
+          | {
+              variant: 'simple' | 'highlighted' | 'boxed';
+              impactLevel?: ('low' | 'normal' | 'high') | null;
+              text: string;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'info';
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'checkout';
+      }
+  )[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -302,6 +470,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: string | Page;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -488,6 +660,176 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  layout?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              variant?: T;
+              impactLevel?: T;
+              headline?: T;
+              subheadline?: T;
+              backgroundImage?: T;
+              subBlocks?:
+                | T
+                | {
+                    info?:
+                      | T
+                      | {
+                          variant?: T;
+                          impactLevel?: T;
+                          text?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        listProducts?:
+          | T
+          | {
+              variant?: T;
+              impactLevel?: T;
+              products?: T;
+              subBlocks?:
+                | T
+                | {
+                    info?:
+                      | T
+                      | {
+                          variant?: T;
+                          impactLevel?: T;
+                          text?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        aboutUs?:
+          | T
+          | {
+              variant?: T;
+              impactLevel?: T;
+              content?: T;
+              subBlocks?:
+                | T
+                | {
+                    info?:
+                      | T
+                      | {
+                          variant?: T;
+                          impactLevel?: T;
+                          text?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        carousel?:
+          | T
+          | {
+              variant?: T;
+              impactLevel?: T;
+              items?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              subBlocks?:
+                | T
+                | {
+                    info?:
+                      | T
+                      | {
+                          variant?: T;
+                          impactLevel?: T;
+                          text?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        info?:
+          | T
+          | {
+              variant?: T;
+              impactLevel?: T;
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        orders?:
+          | T
+          | {
+              variant?: T;
+              impactLevel?: T;
+              orders?: T;
+              subBlocks?:
+                | T
+                | {
+                    info?:
+                      | T
+                      | {
+                          variant?: T;
+                          impactLevel?: T;
+                          text?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        checkout?:
+          | T
+          | {
+              variant?: T;
+              impactLevel?: T;
+              items?:
+                | T
+                | {
+                    name?: T;
+                    price?: T;
+                    quantity?: T;
+                    id?: T;
+                  };
+              subBlocks?:
+                | T
+                | {
+                    info?:
+                      | T
+                      | {
+                          variant?: T;
+                          impactLevel?: T;
+                          text?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -517,6 +859,246 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promotions".
+ */
+export interface Promotion {
+  id: string;
+  activePromotions?:
+    | {
+        title: string;
+        description?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        bannerImage?: (string | null) | Media;
+        startDate: string;
+        endDate: string;
+        isActive?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: string;
+  siteName: string;
+  colors: {
+    lightMode: {
+      /**
+       * Primary color for light mode
+       */
+      primary: string;
+      /**
+       * Secondary color for light mode
+       */
+      secondary: string;
+      /**
+       * Accent color for light mode
+       */
+      accent: string;
+      /**
+       * Background color for light mode
+       */
+      background: string;
+    };
+    darkMode: {
+      /**
+       * Primary color for dark mode
+       */
+      primaryDark: string;
+      /**
+       * Secondary color for dark mode
+       */
+      secondaryDark: string;
+      /**
+       * Accent color for dark mode
+       */
+      accentDark: string;
+      /**
+       * Background color for dark mode
+       */
+      backgroundDark: string;
+    };
+  };
+  favicon?: (string | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  logo: string | Media;
+  navLinks?:
+    | {
+        label: string;
+        type?: ('internal' | 'external') | null;
+        url?: string | null;
+        reference?:
+          | ({
+              relationTo: 'products';
+              value: string | Product;
+            } | null)
+          | ({
+              relationTo: 'categories';
+              value: string | Category;
+            } | null);
+        id?: string | null;
+      }[]
+    | null;
+  ctaButton: {
+    label: string;
+    url: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  logo?: (string | null) | Media;
+  copyrightText: string;
+  navLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "promotions_select".
+ */
+export interface PromotionsSelect<T extends boolean = true> {
+  activePromotions?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        bannerImage?: T;
+        startDate?: T;
+        endDate?: T;
+        isActive?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  colors?:
+    | T
+    | {
+        lightMode?:
+          | T
+          | {
+              primary?: T;
+              secondary?: T;
+              accent?: T;
+              background?: T;
+            };
+        darkMode?:
+          | T
+          | {
+              primaryDark?: T;
+              secondaryDark?: T;
+              accentDark?: T;
+              backgroundDark?: T;
+            };
+      };
+  favicon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  navLinks?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        url?: T;
+        reference?: T;
+        id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  copyrightText?: T;
+  navLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

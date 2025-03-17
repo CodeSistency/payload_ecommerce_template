@@ -1,23 +1,35 @@
+"use client";
 import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
 import { getPayload } from 'payload'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import './styles.css'
 import { HomepageScreen } from '@/components/Views/Home/HomepageScreen.comp'
+import { useRouter } from 'next/navigation'
 
-export default async function HomePage() {
-  const headers = await getHeaders()
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
+export default function HomePage() {
+  const router = useRouter()
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+  useEffect(() => {
+    router.push('/home')
+  }, [router])
 
-  return <HomepageScreen/>
+  return null
 }
+
+// export default async function HomePage() {
+//   const headers = await getHeaders()
+//   const payloadConfig = await config
+//   const payload = await getPayload({ config: payloadConfig })
+//   const { user } = await payload.auth({ headers })
+
+//   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+
+//   return <HomepageScreen/>
+// }
 
 // export default async function HomePage() {
 //   const headers = await getHeaders()

@@ -5,10 +5,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#007bff",        // Blue for light mode
-        secondary: "#6c757d",      // Gray for light mode
-        primaryDark: "#0056b3",   // Darker blue for dark mode
-        secondaryDark: "#343a40", // Darker gray for dark mode
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        accent: "var(--accent)",
+        background: "var(--background)",
+        "primary-dark": "var(--primary-dark)",
+        "secondary-dark": "var(--secondary-dark)",
+        "accent-dark": "var(--accent-dark)",
+        "background-dark": "var(--background-dark)",
       },
     },
   },

@@ -20,6 +20,7 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { default as default_9cc3488dd94d55ae80785d0d587efbec } from '@/app/fields/colorPicker/ColorPicker'
 import { default as default_5fc2c1be766a1d881e351599d14892e7 } from '../../../collections/hooks/useSeed/seedButton'
 
 export const importMap = {
@@ -45,5 +46,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "@/app/fields/colorPicker/ColorPicker#default": default_9cc3488dd94d55ae80785d0d587efbec,
   "./collections/hooks/useSeed/seedButton#default": default_5fc2c1be766a1d881e351599d14892e7
 }
